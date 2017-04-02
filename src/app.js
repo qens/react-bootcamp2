@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import uniqueId from 'lodash/uniqueId';
 import Header from "./header/header";
 import SideNav from "./sidenav/side-nav";
+import Article from "./article/article";
 
 let categories = [
     {
@@ -82,6 +83,7 @@ export default class App extends Component {
             <div>
                 <Header/>
                 <SideNav categories={this.state.categories} onChooseCategory={this.onChooseCategory}></SideNav>
+                <Article category={this.state.chosenCategory}/>
             </div>
         );
     }

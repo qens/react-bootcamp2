@@ -11,7 +11,11 @@ export default class SideNav extends Component {
             return (
                 <ul>
                     {categories.map(item => (
-                        <li key={item.id} onClick={()=>{this.props.onChooseCategory(item)}}>
+                        <li key={item.id} onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            this.props.onChooseCategory(item)
+                        }}>
                             {item.name}
                             {item.categories && drawCategories(item.categories)}
                         </li>
