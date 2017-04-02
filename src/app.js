@@ -71,6 +71,7 @@ export default class App extends Component {
         };
 
         this.onChooseCategory = this.onChooseCategory.bind(this);
+        this.addTask = this.addTask.bind(this);
     }
 
     onChooseCategory(category) {
@@ -78,12 +79,24 @@ export default class App extends Component {
         this.setState({chosenCategory: category});
     }
 
+    addTask(taskName) {
+        let newTask = {
+            id: uniqueId(),
+            name: taskName,
+            done: false,
+            description: ''
+        };
+        this.setState(state => {
+            state.chosenCategory.tasks.push(newTask)
+        });
+    }
+
     render() {
         return (
             <div>
                 <Header/>
                 <SideNav categories={this.state.categories} onChooseCategory={this.onChooseCategory}></SideNav>
-                <Article category={this.state.chosenCategory}/>
+                <Article category={this.state.chosenCategory} addTask={this.addTask}/>
             </div>
         );
     }

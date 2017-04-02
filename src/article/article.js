@@ -7,6 +7,11 @@ export default class Article extends Component {
     }
 
     render() {
+        let drawCreateTaskBlock = () => <div>
+            <input type="text" ref={(input) => this.input = input}/>
+            <button onClick={() => this.props.addTask(this.input.value)}>Add task</button>
+        </div>;
+
         let drawTask = task => <li key={task.id}>{task.name}</li>;
 
         let drawTasksList = () => <div>
@@ -14,6 +19,7 @@ export default class Article extends Component {
         </div>;
 
         return (<article>
+            {this.props.category && this.props.category.tasks ? drawCreateTaskBlock() : null}
             {this.props.category && this.props.category.tasks ? drawTasksList() : null}
         </article>)
     }
