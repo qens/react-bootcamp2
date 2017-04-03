@@ -18,7 +18,7 @@ export default class Article extends Component {
             {this.props.category.tasks.map(task => drawTask(task))}
         </div>;
 
-        return (<article>
+        return (<article className="article">
             {this.props.category && this.props.category.tasks ? drawCreateTaskBlock() : null}
             {this.props.category && this.props.category.tasks ? drawTasksList() : null}
         </article>)

@@ -3,6 +3,7 @@ import uniqueId from 'lodash/uniqueId';
 import Header from "./header/header";
 import SideNav from "./sidenav/side-nav";
 import Article from "./article/article";
+import './app.css';
 
 let categories = [
     {
@@ -93,10 +94,13 @@ export default class App extends Component {
 
     render() {
         return (
-            <div>
-                <Header/>
-                <SideNav categories={this.state.categories} onChooseCategory={this.onChooseCategory}></SideNav>
-                <Article category={this.state.chosenCategory} addTask={this.addTask}/>
+            <div className="main">
+                <Header className="header"/>
+                <div className="content">
+                    <SideNav categories={this.state.categories}
+                             onChooseCategory={this.onChooseCategory}></SideNav>
+                    <Article category={this.state.chosenCategory} addTask={this.addTask}/>
+                </div>
             </div>
         );
     }

@@ -23,7 +23,7 @@ export default class SideNav extends Component {
                 </ul>
             );
         };
-        return (<div>
+        return (<div className="side-nav">
             {this.props.categories ? drawCategories(this.props.categories) : null}
         </div>);
     }

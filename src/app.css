@@ -1,0 +1,33 @@
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.content {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1 0 auto;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.side-nav {
+    flex: 1 1 200px;
+}
+.article {
+    flex: 3 1 600px;
+    margin-left: 10px;
+}
