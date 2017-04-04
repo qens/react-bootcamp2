@@ -68,11 +68,14 @@ export default class App extends Component {
             categories: categories,
             chosenCategory: null,
             filter: null,
-            editedTask: null
+            taskToEdit: null,
+            editMode: false
         };
 
         this.onChooseCategory = this.onChooseCategory.bind(this);
         this.addTask = this.addTask.bind(this);
+        this.editTask = this.editTask.bind(this);
+        this.onTaskChange = this.onTaskChange.bind(this);
     }
 
     onChooseCategory(category) {
@@ -92,6 +95,15 @@ export default class App extends Component {
         });
     }
 
+    editTask(task) {
+        this.setState({taskToEdit: task});
+    }
+
+    onTaskChange(task, isDone) {
+        console.debug(arguments);
+        this.setState(() => task.done = isDone);
+    }
+
     render() {
         return (
             <div className="main">
@@ -99,7 +111,11 @@ export default class App extends Component {
                 <div className="content">
                     <SideNav categories={this.state.categories}
                              onChooseCategory={this.onChooseCategory}></SideNav>
-                    <Article category={this.state.chosenCategory} addTask={this.addTask}/>
+                    <Article category={this.state.chosenCategory}
+                             addTask={this.addTask}
+                             editTask={this.editTask}
+                             onTaskChange={this.onTaskChange}
+                             taskToEdit={this.state.taskToEdit}/>
                 </div>
             </div>
         );
