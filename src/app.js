@@ -4,6 +4,7 @@ import Header from "./header/header";
 import SideNav from "./sidenav/side-nav";
 import Article from "./article/article";
 import './app.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 let categories = [
     {
@@ -106,18 +107,20 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="main">
-                <Header className="header"/>
-                <div className="content">
-                    <SideNav categories={this.state.categories}
-                             onChooseCategory={this.onChooseCategory}></SideNav>
-                    <Article category={this.state.chosenCategory}
-                             addTask={this.addTask}
-                             editTask={this.editTask}
-                             onTaskChange={this.onTaskChange}
-                             taskToEdit={this.state.taskToEdit}/>
+            <MuiThemeProvider>
+                <div className="main">
+                    <Header className="header"/>
+                    <div className="content">
+                        <SideNav categories={this.state.categories}
+                                 onChooseCategory={this.onChooseCategory}></SideNav>
+                        <Article category={this.state.chosenCategory}
+                                 addTask={this.addTask}
+                                 editTask={this.editTask}
+                                 onTaskChange={this.onTaskChange}
+                                 taskToEdit={this.state.taskToEdit}/>
+                    </div>
                 </div>
-            </div>
+            </MuiThemeProvider>
         );
     }
 

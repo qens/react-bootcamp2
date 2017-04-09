@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import RaisedButton from 'material-ui/RaisedButton';
+
 export default class Article extends Component {
 
     constructor(props) {
@@ -9,7 +11,7 @@ export default class Article extends Component {
     render() {
         let drawCreateTaskBlock = () => <div>
             <input type="text" ref={(input) => this.input = input}/>
-            <button onClick={() => this.props.addTask(this.input.value)}>Add task</button>
+            <RaisedButton onClick={() => this.props.addTask(this.input.value)}>Add task</RaisedButton>
         </div>;
 
         let drawTask = task => <li key={task.id}>
