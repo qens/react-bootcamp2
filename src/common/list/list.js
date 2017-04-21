@@ -25,6 +25,13 @@ export class ListItem extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        // open only if necessary
+        if (nextProps.open && !this.state.open) {
+            this.setState({open: nextProps.open});
+        }
+    }
+
     renderExpandButton() {
         return <IconButton className="expand-button"
                            onClick={(e) => {
@@ -36,7 +43,7 @@ export class ListItem extends Component {
 
     render() {
         // console.debug(this.props);
-        return (<div className="list-item">
+        return (<div className="list-item" onClick={this.props.onClick}>
             {this.props.nestedItems ? this.renderExpandButton() : null}
             {this.props.children}
             {this.state.open ? <List>{this.props.nestedItems}</List> : null }

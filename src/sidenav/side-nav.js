@@ -60,6 +60,7 @@ export default class SideNav extends Component {
                                      event.stopPropagation();
                                      this.props.onChooseCategory(item)
                                  }}
+                                 open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
                 ><span>{item.name}</span>
                     <IconButton><EditorModeEdit /></IconButton>
