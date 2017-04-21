@@ -1,0 +1,17 @@
+.list-container {
+    /*padding: 5px;*/
+}
+
+.list-item {
+    /*margin: 3px;*/
+}
+
+.list-item > .list-container {
+    margin-left: 50px;
+}
+
+.expand-button {
+    padding: 0 !important;
+    width: 30px !important;
+    height: 25px !important;
+}
