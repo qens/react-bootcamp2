@@ -77,11 +77,28 @@ export default class App extends Component {
         this.addTask = this.addTask.bind(this);
         this.editTask = this.editTask.bind(this);
         this.onTaskChange = this.onTaskChange.bind(this);
+        this.addCategory = this.addCategory.bind(this);
     }
 
     onChooseCategory(category) {
         console.debug('Category has been chosen: ', category);
         this.setState({chosenCategory: category});
+    }
+
+    addCategory(name, categories, item) {
+        console.debug('Add category: ', name, categories, item);
+        this.setState(state => {
+            categories = categories || (item && item.categories);
+            if (!categories) {
+                categories = item.categories = [];
+            }
+            let category = {
+                id: uniqueId(),
+                name: name,
+                tasks: []
+            };
+            categories.unshift(category);
+        });
     }
 
     addTask(taskName) {
@@ -112,7 +129,8 @@ export default class App extends Component {
                     <Header className="header"/>
                     <div className="content">
                         <SideNav categories={this.state.categories}
-                                 onChooseCategory={this.onChooseCategory}></SideNav>
+                                 onChooseCategory={this.onChooseCategory}
+                                 addCategory={this.addCategory}></SideNav>
                         <Article category={this.state.chosenCategory}
                                  addTask={this.addTask}
                                  editTask={this.editTask}
