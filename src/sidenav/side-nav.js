@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import {List, ListItem} from '../common/list/list';
-import ContentAddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline';
-import ContentRemoveCircleOutline from 'material-ui/svg-icons/content/remove-circle-outline';
-import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-
-import {FlatButton, IconButton, TextField} from "material-ui";
+import {FlatButton, TextField} from "material-ui";
+import Category from "../common/category/category";
 
 export default class SideNav extends Component {
 
@@ -12,7 +9,9 @@ export default class SideNav extends Component {
         super(props);
         this.state = {
             categoryIsAddingTo: null
-        }
+        };
+
+        this.addToCategory = this.addToCategory.bind(this);
     }
 
     drawAddCategory(categories) {
@@ -46,13 +45,20 @@ export default class SideNav extends Component {
         </span>
     }
 
+    addToCategory(categoryId) {
+        this.setState({categoryIsAddingTo: categoryId});
+    }
+
+
     drawCategories(categories) {
         return categories.map(item => {
                 let nestedItems = [];
-                (item.id === this.state.categoryIsAddingTo)
-                && nestedItems.push(this.drawNestedAddCategory(item));
-                item.categories && Array.prototype.push.apply(nestedItems, this.drawCategories(item.categories));
-                console.debug(nestedItems);
+                if (item.id === this.state.categoryIsAddingTo) {
+                    nestedItems.push(this.drawNestedAddCategory(item));
+                }
+                if (item.categories) {
+                    Array.prototype.push.apply(nestedItems, this.drawCategories(item.categories));
+                }
 
                 return <ListItem key={item.id}
                                  onClick={(event) => {
@@ -62,15 +68,7 @@ export default class SideNav extends Component {
                                  }}
                                  open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
-                ><span>{item.name}</span>
-                    <IconButton><EditorModeEdit /></IconButton>
-                    <IconButton><ContentRemoveCircleOutline /></IconButton>
-                    <IconButton><ContentAddCircleOutline onClick={(e) => {
-                        // e.preventDefault();
-                        // e.stopPropagation();
-                        console.debug('add category');
-                        this.setState({categoryIsAddingTo: item.id});
-                    }}/></IconButton>
+                ><Category category={item} removeCategory={()=>this.props.removeCategory(item, categories)} addToCategory={this.addToCategory}/>
                 </ListItem>
             }
         );

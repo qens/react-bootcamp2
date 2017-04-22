@@ -78,6 +78,7 @@ export default class App extends Component {
         this.editTask = this.editTask.bind(this);
         this.onTaskChange = this.onTaskChange.bind(this);
         this.addCategory = this.addCategory.bind(this);
+        this.removeCategory = this.removeCategory.bind(this);
     }
 
     onChooseCategory(category) {
@@ -98,6 +99,14 @@ export default class App extends Component {
                 tasks: []
             };
             categories.unshift(category);
+        });
+    }
+
+    removeCategory(category, categories) {
+        console.debug('Remove category: ', category, categories);
+        this.setState(state=> {
+            let index = categories.indexOf(category);
+            categories.splice(index, 1);
         });
     }
 
@@ -130,7 +139,9 @@ export default class App extends Component {
                     <div className="content">
                         <SideNav categories={this.state.categories}
                                  onChooseCategory={this.onChooseCategory}
-                                 addCategory={this.addCategory}></SideNav>
+                                 addCategory={this.addCategory}
+                                 removeCategory={this.removeCategory}
+                        ></SideNav>
                         <Article category={this.state.chosenCategory}
                                  addTask={this.addTask}
                                  editTask={this.editTask}
