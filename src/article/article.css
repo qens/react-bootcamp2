@@ -1,0 +1,5 @@
+.task-block {
+    display: flex;
+    flex-flow: row nowrap;
+
+}
