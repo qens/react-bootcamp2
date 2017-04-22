@@ -3,11 +3,13 @@ import {IconButton, Menu, MenuItem, Popover} from "material-ui";
 import ContentAddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline';
 import ContentRemoveCircleOutline from 'material-ui/svg-icons/content/remove-circle-outline';
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import {AddEditCategory} from "./add-edit-category";
 
 export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            edit: false,
             remove: {
                 open: false,
                 anchorEl: null
@@ -16,9 +18,21 @@ export default class Category extends Component {
     }
 
     render() {
-        return <span>
+        return this.state.edit ?
+            <AddEditCategory
+                addCategory={value => {
+                    this.props.editCategory(value);
+                    this.setState({edit: false});
+                }}
+                cancel={() => this.setState({edit: false})}/>
+            : <span>
             <span>{this.props.category.name}</span>
-            <IconButton><EditorModeEdit /></IconButton>
+            <IconButton onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.debug('edit category');
+                this.setState({edit: true});
+            }}><EditorModeEdit /></IconButton>
             <IconButton onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {List, ListItem} from '../common/list/list';
 import {FlatButton, TextField} from "material-ui";
 import Category from "../common/category/category";
+import {AddEditCategory} from "../common/category/add-edit-category";
 
 export default class SideNav extends Component {
 
@@ -27,21 +28,13 @@ export default class SideNav extends Component {
     }
 
     drawNestedAddCategory(item) {
-        let textField;
         return <span key="-1">
-            <TextField hintText="Input category name" ref={(field) => textField = field}/>
-            <FlatButton label="Add" onClick={() => {
-                console.debug(textField);
-                this.props.addCategory(textField.input.value, item.categories, item);
-                textField.input.value = '';
-                this.setState({categoryIsAddingTo: null});
-            }}/>
-            <FlatButton label="Cancel" onClick={() => {
-                console.debug(textField);
-                // this.props.addCategory(textField.input.value, categories);
-                textField.input.value = '';
-                this.setState({categoryIsAddingTo: null});
-            }}/>
+            <AddEditCategory
+                addCategory={(value) => {
+                    this.props.addCategory(value, item.categories, item);
+                    this.setState({categoryIsAddingTo: null});
+                }}
+                cancel={() => this.setState({categoryIsAddingTo: null})}/>
         </span>
     }
 
@@ -68,7 +61,10 @@ export default class SideNav extends Component {
                                  }}
                                  open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
-                ><Category category={item} removeCategory={()=>this.props.removeCategory(item, categories)} addToCategory={this.addToCategory}/>
+                ><Category category={item}
+                           removeCategory={() => this.props.removeCategory(item, categories)}
+                           addToCategory={this.addToCategory}
+                           editCategory={value=> this.props.editCategory(value, item)}/>
                 </ListItem>
             }
         );
