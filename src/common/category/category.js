@@ -20,6 +20,7 @@ export default class Category extends Component {
     render() {
         return this.state.edit ?
             <AddEditCategory
+                value={this.props.category.name}
                 addCategory={value => {
                     this.props.editCategory(value);
                     this.setState({edit: false});
