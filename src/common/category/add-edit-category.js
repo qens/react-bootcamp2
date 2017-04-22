@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {FlatButton, TextField} from "material-ui";
+import {FlatButton, IconButton, TextField} from "material-ui";
+import DoneIcon from 'material-ui/svg-icons/action/done';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 export class AddEditCategory extends Component {
     constructor(props) {
@@ -10,14 +12,14 @@ export class AddEditCategory extends Component {
         let textField;
         return <span>
             <TextField hintText="Input category name" ref={(field) => textField = field}/>
-            <FlatButton label="Add" onClick={() => {
+            <IconButton label="Add" onClick={() => {
                 this.props.addCategory(textField.input.value);
                 textField.input.value = '';
-            }}/>
-            <FlatButton label="Cancel" onClick={() => {
+            }}><DoneIcon /></IconButton>
+            <IconButton label="Cancel" onClick={() => {
                 this.props.cancel();
                 textField.input.value = '';
-            }}/>
+            }}><ClearIcon /></IconButton>
         </span>
     }
 
