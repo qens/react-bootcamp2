@@ -29,14 +29,14 @@ export default class Article extends Component {
     drawTasksList() {
         return <div>
             {this.props.category.tasks.map(task =>
-                <Paper key={task.id} style={paperStyle}>
-                    <div className="task-block">
+                <Paper key={task.id} style={paperStyle} className="task-block">
+                    <div className="task-left-part">
                         <Checkbox checked={task.done}
                                   style={{width: '20px'}}
                                   onCheck={(event, isInputChecked) => this.props.onTaskChange(task, isInputChecked)}/>
                         <span>{task.name}</span>
-                        <IconButton onClick={() => this.props.editTask(task)}><EditorModeEdit /></IconButton>
                     </div>
+                    <IconButton onClick={() => this.props.editTask(task)} ><EditorModeEdit /></IconButton>
                 </Paper>
             )}
         </div>;

@@ -4,9 +4,12 @@
 
 .list-item {
     /*margin: 3px;*/
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 }
 
-.list-item > .list-container {
+.list-item-block > .list-container {
     margin-left: 50px;
 }
 

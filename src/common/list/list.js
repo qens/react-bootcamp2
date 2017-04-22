@@ -43,10 +43,13 @@ export class ListItem extends Component {
 
     render() {
         // console.debug(this.props);
-        return (<div className="list-item" onClick={this.props.onClick}>
-            {this.props.nestedItems ? this.renderExpandButton() : null}
-            {this.props.children}
-            {this.state.open ? <List>{this.props.nestedItems}</List> : null }
-        </div>)
+        return (
+            <div className="list-item-block" onClick={this.props.onClick}>
+                <div className="list-item">
+                    {this.props.nestedItems ? this.renderExpandButton() : null}
+                    {this.props.children}
+                </div>
+                {this.state.open ? <List>{this.props.nestedItems}</List> : null }
+            </div>);
     }
 }
