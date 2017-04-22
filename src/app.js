@@ -68,7 +68,11 @@ export default class App extends Component {
         this.state = {
             categories: categories,
             chosenCategory: null,
-            filter: null,
+            filter: {
+                showDone: false,
+                searchText: 'asdf'
+            },
+            progress: 0,
             taskToEdit: null,
             editMode: false
         };
@@ -80,11 +84,12 @@ export default class App extends Component {
         this.addCategory = this.addCategory.bind(this);
         this.removeCategory = this.removeCategory.bind(this);
         this.editCategory = this.editCategory.bind(this);
+        this.changeFilter = this.changeFilter.bind(this);
     }
 
     onChooseCategory(category) {
         console.debug('Category has been chosen: ', category);
-        this.setState({chosenCategory: category});
+        this.setState({chosenCategory: category}, this.recalculateProgress);
     }
 
     addCategory(name, categories, item) {
@@ -105,7 +110,7 @@ export default class App extends Component {
 
     removeCategory(category, categories) {
         console.debug('Remove category: ', category, categories);
-        this.setState(state=> {
+        this.setState(state => {
             let index = categories.indexOf(category);
             categories.splice(index, 1);
         });
@@ -113,7 +118,7 @@ export default class App extends Component {
 
     editCategory(name, item) {
         console.debug('Edit category: ', name, item);
-        this.setState(state=>{
+        this.setState(state => {
             item.name = name;
         })
     }
@@ -127,7 +132,7 @@ export default class App extends Component {
         };
         this.setState(state => {
             state.chosenCategory.tasks.push(newTask)
-        });
+        }, this.recalculateProgress);
     }
 
     editTask(task) {
@@ -136,14 +141,39 @@ export default class App extends Component {
 
     onTaskChange(task, isDone) {
         console.debug(arguments);
-        this.setState(() => task.done = isDone);
+        this.setState(() => task.done = isDone, this.recalculateProgress);
+
+    }
+
+    changeFilter(showDone, searchText) {
+        this.setState(state => {
+            state.filter = {
+                showDone: showDone,
+                searchText: searchText
+            }
+        });
+    }
+
+    recalculateProgress() {
+        if (this.state.chosenCategory) {
+            let total = this.state.chosenCategory.tasks.length;
+            let count = this.state.chosenCategory.tasks.map(task => task.done).reduce((counter, isDone) => {
+                console.debug(arguments);
+                return counter + isDone;
+            });
+            let progress = count * 100 / total;
+
+            this.setState({progress: progress});
+        }
     }
 
     render() {
         return (
             <MuiThemeProvider>
                 <div className="main">
-                    <Header className="header"/>
+                    <Header filter={this.state.filter}
+                            progress={this.state.progress}
+                            changeFilter={this.changeFilter}/>
                     <div className="content">
                         <SideNav categories={this.state.categories}
                                  onChooseCategory={this.onChooseCategory}
@@ -151,7 +181,7 @@ export default class App extends Component {
                                  removeCategory={this.removeCategory}
                                  editCategory={this.editCategory}
                                  chosenCategoryId={this.state.chosenCategory && this.state.chosenCategory.id}
-                        ></SideNav>
+                        />
                         <Article category={this.state.chosenCategory}
                                  addTask={this.addTask}
                                  editTask={this.editTask}

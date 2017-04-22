@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.header-main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
