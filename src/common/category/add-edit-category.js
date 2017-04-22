@@ -11,7 +11,7 @@ export class AddEditCategory extends Component {
     render() {
         let textField;
         return <span>
-            <TextField hintText="Input category name" value={this.props.value} ref={(field) => textField = field}/>
+            <TextField hintText="Input category name" defaultValue={this.props.value} ref={(field) => textField = field}/>
             <IconButton label="Add" onClick={() => {
                 this.props.addCategory(textField.input.value);
                 textField.input.value = '';
