@@ -150,6 +150,7 @@ export default class App extends Component {
                                  addCategory={this.addCategory}
                                  removeCategory={this.removeCategory}
                                  editCategory={this.editCategory}
+                                 chosenCategoryId={this.state.chosenCategory && this.state.chosenCategory.id}
                         ></SideNav>
                         <Article category={this.state.chosenCategory}
                                  addTask={this.addTask}

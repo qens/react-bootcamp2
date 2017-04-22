@@ -42,10 +42,9 @@ export class ListItem extends Component {
     }
 
     render() {
-        // console.debug(this.props);
         return (
             <div className="list-item-block" onClick={this.props.onClick}>
-                <div className="list-item">
+                <div className={'list-item' + (this.props.selected ? ' selected' : '')}>
                     {this.props.nestedItems ? this.renderExpandButton() : null}
                     {this.props.children}
                 </div>

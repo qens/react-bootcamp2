@@ -3,6 +3,7 @@ import {List, ListItem} from '../common/list/list';
 import {FlatButton, TextField} from "material-ui";
 import Category from "../common/category/category";
 import {AddEditCategory} from "../common/category/add-edit-category";
+import './side-nav.css';
 
 export default class SideNav extends Component {
 
@@ -59,12 +60,13 @@ export default class SideNav extends Component {
                                      event.stopPropagation();
                                      this.props.onChooseCategory(item)
                                  }}
+                                 selected={this.props.chosenCategoryId === item.id}
                                  open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
                 ><Category category={item}
                            removeCategory={() => this.props.removeCategory(item, categories)}
                            addToCategory={this.addToCategory}
-                           editCategory={value=> this.props.editCategory(value, item)}/>
+                           editCategory={value => this.props.editCategory(value, item)}/>
                 </ListItem>
             }
         );
