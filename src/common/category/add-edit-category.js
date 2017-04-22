@@ -1,25 +1,37 @@
 import React, {Component} from 'react';
-import {FlatButton, IconButton, TextField} from "material-ui";
+import {IconButton, TextField} from "material-ui";
 import DoneIcon from 'material-ui/svg-icons/action/done';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 export class AddEditCategory extends Component {
+
+    textField;
+
     constructor(props) {
         super(props);
+        this.add = this.add.bind(this);
+        this.cancel = this.cancel.bind(this);
+    }
+
+    add(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.addCategory(this.textField.input.value);
+        this.textField.input.value = '';
+    }
+
+    cancel(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.cancel();
+        this.textField.input.value = '';
     }
 
     render() {
-        let textField;
         return <span>
-            <TextField hintText="Input category name" defaultValue={this.props.value} ref={(field) => textField = field}/>
-            <IconButton label="Add" onClick={() => {
-                this.props.addCategory(textField.input.value);
-                textField.input.value = '';
-            }}><DoneIcon /></IconButton>
-            <IconButton label="Cancel" onClick={() => {
-                this.props.cancel();
-                textField.input.value = '';
-            }}><ClearIcon /></IconButton>
+            <TextField hintText="Input category name" defaultValue={this.props.value} ref={(field) => this.textField = field}/>
+            <IconButton tooltip="Ok" onClick={this.add}><DoneIcon /></IconButton>
+            <IconButton tooltip="Cancel" onClick={this.cancel}><ClearIcon /></IconButton>
         </span>
     }
 
