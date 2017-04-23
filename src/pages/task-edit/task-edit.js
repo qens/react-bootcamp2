@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AppService from '../../app.service';
 import {CategoryList, CategoryListMode} from "../main/category-list/category-list";
+import {TaskEditor} from "./task-editor/task-editor";
 
 export class TaskEdit extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ export class TaskEdit extends Component {
                                       move={this.move}/>
                     </div>
                     <article className="article">
+                        <TaskEditor task={this.state.task}/>
                     </article>
                 </div>
             </div>
