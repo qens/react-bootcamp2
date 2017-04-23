@@ -68,7 +68,11 @@ class AppService {
     }
 
 
+    getTaskById(taskId) {
+        console.debug(taskId);
+        return categories[0].tasks[0];
 
+    }
 }
 
 export default new AppService();

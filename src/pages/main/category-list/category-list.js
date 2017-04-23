@@ -5,12 +5,19 @@ import Category from "../../../common/category/category";
 import {AddEditCategory} from "../../../common/category/add-edit-category";
 import './category-list.css';
 import {Link} from "react-router";
+import CategoryToMove from "../../../common/category/category-to-move";
+
+export const CategoryListMode = {
+    full: 0,
+    toMove: 1
+};
 
 export class CategoryList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            mode: props.mode || CategoryListMode.full,
             categoryIsAddingTo: null
         };
 
@@ -44,6 +51,15 @@ export class CategoryList extends Component {
         this.setState({categoryIsAddingTo: categoryId});
     }
 
+    drawCategory(item, categories) {
+        return this.state.mode === CategoryListMode.toMove ?
+            <CategoryToMove category={item} move={this.props.move}/>
+            : <Link to={`/list/${item.id}`}>
+                <Category category={item}
+                          removeCategory={() => this.props.removeCategory(item, categories)}
+                          addToCategory={this.addToCategory}
+                          editCategory={value => this.props.editCategory(value, item)}/></Link>;
+    }
 
     drawCategories(categories) {
         return categories.map(item => {
@@ -56,18 +72,10 @@ export class CategoryList extends Component {
                 }
 
                 return <ListItem key={item.id}
-                                 // onClick={(event) => {
-                                 //     event.preventDefault();
-                                 //     event.stopPropagation();
-                                 //     this.props.onChooseCategory(item)
-                                 // }}
                                  selected={this.props.chosenCategoryId === item.id}
-                                 open={item.id === this.state.categoryIsAddingTo}
+                                 open={item.id === this.state.categoryIsAddingTo || this.props.mode === CategoryListMode.toMove}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
-                ><Link to={`/list/${item.id}`}><Category category={item}
-                           removeCategory={() => this.props.removeCategory(item, categories)}
-                           addToCategory={this.addToCategory}
-                                       editCategory={value => this.props.editCategory(value, item)}/></Link>
+                > {this.drawCategory(item, categories)}
                 </ListItem>
             }
         );
@@ -75,10 +83,12 @@ export class CategoryList extends Component {
 
     render() {
         return (<div className="category-list">
-            {this.drawAddCategory(this.props.categories)}
+            {this.state.mode === CategoryListMode.full ? this.drawAddCategory(this.props.categories) : null}
             <List>
                 {this.props.categories ? this.drawCategories(this.props.categories) : null}
             </List>
         </div>);
     }
+
+
 }

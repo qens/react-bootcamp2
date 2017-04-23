@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Main} from "./pages/main/main";
 import {TaskList} from "./pages/main/task-list/task-list";
+import {TaskEdit} from "./pages/task-edit/task-edit";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -17,6 +18,7 @@ const routes = (
             <Route path="list" component={Main}>
                 <Route path=":categoryId" component={TaskList} />
             </Route>
+            <Route path="task/:taskId/edit" component={TaskEdit} />
         </Route>
     </Router>
 );

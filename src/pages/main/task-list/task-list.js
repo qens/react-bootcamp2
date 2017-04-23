@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Checkbox, FlatButton, IconButton, Paper, TextField} from "material-ui";
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import './task-list.css';
+import {Link} from "react-router";
 
 const paperStyle = {
     width: '100%',
@@ -41,7 +42,7 @@ export class TaskList extends Component {
                                   onCheck={(event, isInputChecked) => this.props.onTaskChange(task, isInputChecked)}/>
                         <span>{task.name}</span>
                     </div>
-                    <IconButton onClick={() => this.props.editTask(task)} ><EditorModeEdit /></IconButton>
+                    <Link to={`/task/${task.id}/edit`}><IconButton><EditorModeEdit /></IconButton></Link>
                 </Paper>
             )}
         </div>;

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import AppService from '../../app.service';
 import uniqueId from 'lodash/uniqueId';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from "./header/header";
 import {CategoryList} from "./category-list/category-list";
 
@@ -132,7 +131,7 @@ export class Main extends Component {
     }
 
     render() {
-        return (<MuiThemeProvider>
+        return (
             <div className="main">
                 <Header filter={this.state.filter}
                         progress={this.state.progress}
@@ -154,7 +153,6 @@ export class Main extends Component {
                         taskToEdit: this.state.taskToEdit
                     })}</article>
                 </div>
-            </div>
-        </MuiThemeProvider>);
+            </div>);
     }
 }
