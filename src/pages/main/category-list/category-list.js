@@ -4,6 +4,7 @@ import {FlatButton, TextField} from "material-ui";
 import Category from "../../../common/category/category";
 import {AddEditCategory} from "../../../common/category/add-edit-category";
 import './category-list.css';
+import {Link} from "react-router";
 
 export class CategoryList extends Component {
 
@@ -55,18 +56,18 @@ export class CategoryList extends Component {
                 }
 
                 return <ListItem key={item.id}
-                                 onClick={(event) => {
-                                     event.preventDefault();
-                                     event.stopPropagation();
-                                     this.props.onChooseCategory(item)
-                                 }}
+                                 // onClick={(event) => {
+                                 //     event.preventDefault();
+                                 //     event.stopPropagation();
+                                 //     this.props.onChooseCategory(item)
+                                 // }}
                                  selected={this.props.chosenCategoryId === item.id}
                                  open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
-                ><Category category={item}
+                ><Link to={`/list/${item.id}`}><Category category={item}
                            removeCategory={() => this.props.removeCategory(item, categories)}
                            addToCategory={this.addToCategory}
-                           editCategory={value => this.props.editCategory(value, item)}/>
+                                       editCategory={value => this.props.editCategory(value, item)}/></Link>
                 </ListItem>
             }
         );

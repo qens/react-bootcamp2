@@ -13,6 +13,7 @@ export class TaskList extends Component {
 
     constructor(props) {
         super(props);
+        console.debug(props);
     }
 
     drawCreateTaskBlock() {

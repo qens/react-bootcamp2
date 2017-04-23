@@ -62,6 +62,13 @@ class AppService {
         return categories;
     }
 
+    getCategoryById(id) {
+        console.debug(id);
+        return categories[0];
+    }
+
+
+
 }
 
 export default new AppService();

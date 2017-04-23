@@ -9,18 +9,25 @@ import {CategoryList} from "./category-list/category-list";
 export class Main extends Component {
     constructor(props) {
         super(props);
+        console.debug(props);
 
         this.state = {
             categories: AppService.getCategories(),
-            chosenCategory: null,
+            chosenCategory: AppService.getCategoryById(props.router.params.categoryId),
             filter: {
-                showDone: false,
-                searchText: 'asdf'
+                showDone: !!props.router.location.query.showDone,
+                searchText: props.router.location.query.searchText
             },
             progress: 0,
             taskToEdit: null,
             editMode: false
         };
+
+        // props.router.listen((routerState)=>{
+        //     console.debug(arguments);
+        //     let categoryId = routerState.router.params.categoryId;
+        //     this.setState({chosenCategory: AppService.getCategoryById(categoryId)});
+        // });
 
         this.onChooseCategory = this.onChooseCategory.bind(this);
         this.addTask = this.addTask.bind(this);
@@ -34,7 +41,15 @@ export class Main extends Component {
 
     onChooseCategory(category) {
         console.debug('Category has been chosen: ', category);
-        this.setState({chosenCategory: category}, this.recalculateProgress);
+        this.setState({chosenCategory: category},
+            () => {
+                // const location = Object.assign({}, this.props.router.getCurrentLocation());
+                // // Object.assign(location.query, this.state.filter);
+                // location.params.categoryId = category.id;
+                // this.props.router.push(location);
+
+                this.recalculateProgress()
+            });
     }
 
     addCategory(name, categories, item) {
@@ -96,6 +111,10 @@ export class Main extends Component {
                 showDone: showDone,
                 searchText: searchText
             }
+        }, () => {
+            const location = Object.assign({}, this.props.router.getCurrentLocation());
+            Object.assign(location.query, this.state.filter);
+            this.props.router.push(location);
         });
     }
 
