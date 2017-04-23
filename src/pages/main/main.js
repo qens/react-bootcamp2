@@ -3,8 +3,8 @@ import AppService from '../../app.service';
 import uniqueId from 'lodash/uniqueId';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import SideNav from "../../sidenav/side-nav";
 import Header from "../../header/header";
+import {CategoryList} from "./category-list/category-list";
 
 export class Main extends Component {
     constructor(props) {
@@ -119,14 +119,14 @@ export class Main extends Component {
                         progress={this.state.progress}
                         changeFilter={this.changeFilter}/>
                 <div className="content">
-                    <SideNav categories={this.state.categories}
-                             onChooseCategory={this.onChooseCategory}
-                             addCategory={this.addCategory}
-                             removeCategory={this.removeCategory}
-                             editCategory={this.editCategory}
-                             chosenCategoryId={this.state.chosenCategory && this.state.chosenCategory.id}
-                    />
-
+                    <div className="side-nav">
+                        <CategoryList categories={this.state.categories}
+                                      onChooseCategory={this.onChooseCategory}
+                                      addCategory={this.addCategory}
+                                      removeCategory={this.removeCategory}
+                                      editCategory={this.editCategory}
+                                      chosenCategoryId={this.state.chosenCategory && this.state.chosenCategory.id}/>
+                    </div>
                     <article className="article"> {this.props.children && React.cloneElement(this.props.children, {
                         category: this.state.chosenCategory,
                         addTask: this.addTask,

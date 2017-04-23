@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {List, ListItem} from '../common/list/list';
+import {List, ListItem} from '../../../common/list/list';
 import {FlatButton, TextField} from "material-ui";
-import Category from "../common/category/category";
-import {AddEditCategory} from "../common/category/add-edit-category";
-import './side-nav.css';
+import Category from "../../../common/category/category";
+import {AddEditCategory} from "../../../common/category/add-edit-category";
+import './category-list.css';
 
-export default class SideNav extends Component {
+export class CategoryList extends Component {
 
     constructor(props) {
         super(props);
@@ -73,7 +73,7 @@ export default class SideNav extends Component {
     }
 
     render() {
-        return (<div className="side-nav">
+        return (<div className="category-list">
             {this.drawAddCategory(this.props.categories)}
             <List>
                 {this.props.categories ? this.drawCategories(this.props.categories) : null}
