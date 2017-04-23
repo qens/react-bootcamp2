@@ -16,6 +16,10 @@ export class TaskList extends Component {
         console.debug(props);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.debug(nextProps);
+    }
+
     drawCreateTaskBlock() {
         let textField;
         return <div>
@@ -45,7 +49,7 @@ export class TaskList extends Component {
 
     render() {
 
-        return (<article className="article">
+        return (<article className="task-list">
             {this.props.category && this.props.category.tasks ? this.drawCreateTaskBlock() : null}
             {this.props.category && this.props.category.tasks ? this.drawTasksList() : null}
         </article>)
