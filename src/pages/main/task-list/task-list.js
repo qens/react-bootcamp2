@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Checkbox, FlatButton, IconButton, Paper, TextField} from "material-ui";
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
-import './article.css';
+import './task-list.css';
 
 const paperStyle = {
     width: '100%',
@@ -9,7 +9,7 @@ const paperStyle = {
     marginTop: '3px'
 };
 
-export default class Article extends Component {
+export class TaskList extends Component {
 
     constructor(props) {
         super(props);
