@@ -18,11 +18,14 @@ export class TaskList extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.debug(nextProps);
+        console.log(nextProps);
     }
 
     drawCreateTaskBlock() {
         let textField;
+
+        console.log("drawCreateTaskBlock")
+
         return <div>
             <TextField hintText="Input task" ref={(input) => textField = input}/>
             <FlatButton onClick={() => {
@@ -32,9 +35,19 @@ export class TaskList extends Component {
         </div>;
     }
 
+    getCategory() {
+        let arr = this.props.categories.filter( cat => cat.id === this.props.params.categoryId );
+        return arr[0];
+    }
+
     drawTasksList() {
+
+        const category = this.getCategory();
+
+        console.log("category: ", category); 
+
         return <div>
-            {this.props.category.tasks.map(task =>
+            {category && category.tasks && category.tasks.map(task =>
                 <Paper key={task.id} style={paperStyle} className="task-block">
                     <div className="task-left-part">
                         <Checkbox checked={task.done}
@@ -50,9 +63,12 @@ export class TaskList extends Component {
 
     render() {
 
+        const category = this.getCategory();
+        
+
         return (<article className="task-list">
-            {this.props.category && this.props.category.tasks ? this.drawCreateTaskBlock() : null}
-            {this.props.category && this.props.category.tasks ? this.drawTasksList() : null}
+            { (this.getCategory() && this.getCategory().tasks) ? this.drawCreateTaskBlock() : null}
+            { (this.getCategory() && this.getCategory().tasks) ? this.drawTasksList() : null}
         </article>)
     }
 

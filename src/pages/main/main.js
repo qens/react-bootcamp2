@@ -82,6 +82,8 @@ export class Main extends Component {
         })
     }
 
+    
+
     addTask(taskName) {
         let newTask = {
             id: uniqueId(),
@@ -89,9 +91,17 @@ export class Main extends Component {
             done: false,
             description: ''
         };
-        this.setState(state => {
-            state.chosenCategory.tasks.push(newTask)
-        }, this.recalculateProgress);
+
+        let categoriez = this.state.categories;
+
+        let categories = this.state.categories.map( cat => {
+            if (cat.id === this.props.params.categoryId) {
+                cat.tasks && cat.tasks.push(newTask)
+            }
+            return cat;
+        });
+
+        this.setState(state => { return {categories: categories} }, this.recalculateProgress);
     }
 
     editTask(task) {
@@ -143,15 +153,17 @@ export class Main extends Component {
                                       addCategory={this.addCategory}
                                       removeCategory={this.removeCategory}
                                       editCategory={this.editCategory}
-                                      chosenCategoryId={this.state.chosenCategory && this.state.chosenCategory.id}/>
+                                      chosenCategoryId={this.props.params.categoryId || null}/>
                     </div>
-                    <article className="article"> {this.props.children && React.cloneElement(this.props.children, {
-                        category: this.state.chosenCategory,
-                        addTask: this.addTask,
-                        editTask: this.editTask,
-                        onTaskChange: this.onTaskChange,
-                        taskToEdit: this.state.taskToEdit
-                    })}</article>
+                    <article className="article"> 
+                        {this.props.children && React.cloneElement(this.props.children, {
+                            categories: this.state.categories,
+                            addTask: this.addTask,
+                            editTask: this.editTask,
+                            onTaskChange: this.onTaskChange,
+                            taskToEdit: this.state.taskToEdit
+                        })}
+                    </article>
                 </div>
             </div>);
     }
