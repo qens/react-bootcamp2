@@ -7,7 +7,7 @@ import './category-list.css';
 import {Link} from "react-router";
 import CategoryToMove from "../../../common/category/category-to-move";
 import {connect} from 'react-redux';
-import {addCategory} from "../../../actions/categories-actions";
+import {addCategory, editCategory, removeCategory} from "../../../actions/categories-actions";
 import {bindActionCreators} from "redux";
 
 export const CategoryListMode = {
@@ -19,7 +19,7 @@ const mapStateProps = (state) => ({
     categories: state.categories
 });
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({addCategory}, dispatch)
+    bindActionCreators({addCategory, removeCategory, editCategory}, dispatch)
 );
 
 class CategoryList extends Component {
@@ -65,9 +65,9 @@ class CategoryList extends Component {
             <CategoryToMove category={item} move={this.props.move}/>
             : <Link to={`/list/${item.id}`}>
                 <Category category={item}
-                          removeCategory={() => this.props.removeCategory(item, categories)}
+                          removeCategory={() => this.props.removeCategory(item.id)}
                           addToCategory={this.addToCategory}
-                          editCategory={value => this.props.editCategory(value, item)}/></Link>;
+                          editCategory={value => this.props.editCategory(item.id, value)}/></Link>;
     }
 
     drawCategories(categories) {

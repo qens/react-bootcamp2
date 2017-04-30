@@ -22,6 +22,11 @@ export const categories = (state = initialState, action) => {
                 name: action.name,
                 parentId: action.parentId
             }, ...state];
+        case types.REMOVE_CATEGORY:
+            return state.filter(category => category.id !== action.id);
+        case types.EDIT_CATEGORY:
+            return state.map(category => (category.id === action.id
+                ? Object.assign({}, category, {name: action.name}) : category));
         default:
             return state;
     }
