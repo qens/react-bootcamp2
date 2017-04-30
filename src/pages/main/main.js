@@ -22,12 +22,6 @@ export class Main extends Component {
             editMode: false
         };
 
-        // props.router.listen((routerState)=>{
-        //     console.debug(arguments);
-        //     let categoryId = routerState.router.params.categoryId;
-        //     this.setState({chosenCategory: AppService.getCategoryById(categoryId)});
-        // });
-
         // this.onChooseCategory = this.onChooseCategory.bind(this);
         // this.addTask = this.addTask.bind(this);
         // this.editTask = this.editTask.bind(this);
@@ -38,49 +32,6 @@ export class Main extends Component {
         // this.changeFilter = this.changeFilter.bind(this);
     }
 
-    // onChooseCategory(category) {
-    //     console.debug('Category has been chosen: ', category);
-    //     this.setState({chosenCategory: category},
-    //         () => {
-    //             // const location = Object.assign({}, this.props.router.getCurrentLocation());
-    //             // // Object.assign(location.query, this.state.filter);
-    //             // location.params.categoryId = category.id;
-    //             // this.props.router.push(location);
-    //
-    //             this.recalculateProgress()
-    //         });
-    // }
-    //
-    // addCategory(name, categories, item) {
-    //     console.debug('Add category: ', name, categories, item);
-    //     this.setState(state => {
-    //         categories = categories || (item && item.categories);
-    //         if (!categories) {
-    //             categories = item.categories = [];
-    //         }
-    //         let category = {
-    //             id: uniqueId(),
-    //             name: name,
-    //             tasks: []
-    //         };
-    //         categories.unshift(category);
-    //     });
-    // }
-    //
-    // removeCategory(category, categories) {
-    //     console.debug('Remove category: ', category, categories);
-    //     this.setState(state => {
-    //         let index = categories.indexOf(category);
-    //         categories.splice(index, 1);
-    //     });
-    // }
-    //
-    // editCategory(name, item) {
-    //     console.debug('Edit category: ', name, item);
-    //     this.setState(state => {
-    //         item.name = name;
-    //     })
-    // }
     //
     //
     //
@@ -104,15 +55,6 @@ export class Main extends Component {
     //     this.setState(state => { return {categories: categories} }, this.recalculateProgress);
     // }
     //
-    // editTask(task) {
-    //     this.setState({taskToEdit: task});
-    // }
-    //
-    // onTaskChange(task, isDone) {
-    //     console.debug(arguments);
-    //     this.setState(() => task.done = isDone, this.recalculateProgress);
-    //
-    // }
     //
     // changeFilter(showDone, searchText) {
     //     this.setState(state => {
@@ -150,15 +92,9 @@ export class Main extends Component {
                     <div className="side-nav">
                         <CategoryList {...this.props.params} />
                     </div>
-                    {/*<article className="article"> */}
-                        {/*{this.props.children && React.cloneElement(this.props.children, {*/}
-                            {/*categories: this.state.categories,*/}
-                            {/*addTask: this.addTask,*/}
-                            {/*editTask: this.editTask,*/}
-                            {/*onTaskChange: this.onTaskChange,*/}
-                            {/*taskToEdit: this.state.taskToEdit*/}
-                        {/*})}*/}
-                    {/*</article>*/}
+                    <article className="article">
+                        {this.props.children}
+                    </article>
                 </div>
             </div>);
     }

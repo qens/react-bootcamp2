@@ -3,6 +3,9 @@ import {Checkbox, FlatButton, IconButton, Paper, TextField} from "material-ui";
 import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import './task-list.css';
 import {Link} from "react-router";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {addTask, changeTask} from "../../../actions/tasks-actions";
 
 const paperStyle = {
     width: '100%',
@@ -10,49 +13,40 @@ const paperStyle = {
     marginTop: '3px'
 };
 
-export class TaskList extends Component {
+const mapStateProps = (state, ownProps) => ({
+    tasks: state.tasks.filter(task=>task.categoryId.toString() === ownProps.params.categoryId),
+    categoryId: ownProps.params.categoryId
+});
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({addTask, changeTask}, dispatch)
+);
+class TaskList extends Component {
 
     constructor(props) {
         super(props);
         console.debug(props);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-    }
-
     drawCreateTaskBlock() {
         let textField;
-
-        console.log("drawCreateTaskBlock")
 
         return <div>
             <TextField hintText="Input task" ref={(input) => textField = input}/>
             <FlatButton onClick={() => {
-                this.props.addTask(textField.input.value);
+                this.props.addTask(textField.input.value, this.props.categoryId);
                 textField.input.value = ''
             }}>Add</FlatButton>
         </div>;
     }
 
-    getCategory() {
-        let arr = this.props.categories.filter( cat => cat.id === this.props.params.categoryId );
-        return arr[0];
-    }
-
     drawTasksList() {
-
-        const category = this.getCategory();
-
-        console.log("category: ", category); 
-
         return <div>
-            {category && category.tasks && category.tasks.map(task =>
+            {this.props.tasks.map(task =>
                 <Paper key={task.id} style={paperStyle} className="task-block">
                     <div className="task-left-part">
-                        <Checkbox checked={task.done}
+                        <Checkbox defaultChecked={task.done}
                                   style={{width: '20px'}}
-                                  onCheck={(event, isInputChecked) => this.props.onTaskChange(task, isInputChecked)}/>
+                                  onCheck={(event, isInputChecked) => this.props.changeTask(task.id, isInputChecked, task.name, task.categoryId, task.description)}/>
                         <span>{task.name}</span>
                     </div>
                     <Link to={`/task/${task.id}/edit`}><IconButton><EditorModeEdit /></IconButton></Link>
@@ -62,14 +56,12 @@ export class TaskList extends Component {
     }
 
     render() {
-
-        const category = this.getCategory();
-        
-
         return (<article className="task-list">
-            { (this.getCategory() && this.getCategory().tasks) ? this.drawCreateTaskBlock() : null}
-            { (this.getCategory() && this.getCategory().tasks) ? this.drawTasksList() : null}
+            {this.drawCreateTaskBlock()}
+            {this.drawTasksList()}
         </article>)
     }
 
 }
+
+export default connect(mapStateProps, mapDispatchToProps)(TaskList);

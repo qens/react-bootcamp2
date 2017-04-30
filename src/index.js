@@ -4,7 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Main} from "./pages/main/main";
-import {TaskList} from "./pages/main/task-list/task-list";
+import TaskList from "./pages/main/task-list/task-list";
 import {TaskEdit} from "./pages/task-edit/task-edit";
 import {combineReducers, createStore} from "redux";
 import {reducers} from "./reducers/index";
