@@ -18,8 +18,6 @@ export class Main extends Component {
                 searchText: props.router.location.query.searchText
             },
             progress: 0,
-            taskToEdit: null,
-            editMode: false
         };
 
         // this.onChooseCategory = this.onChooseCategory.bind(this);
@@ -32,28 +30,6 @@ export class Main extends Component {
         // this.changeFilter = this.changeFilter.bind(this);
     }
 
-    //
-    //
-    //
-    // addTask(taskName) {
-    //     let newTask = {
-    //         id: uniqueId(),
-    //         name: taskName,
-    //         done: false,
-    //         description: ''
-    //     };
-    //
-    //     let categoriez = this.state.categories;
-    //
-    //     let categories = this.state.categories.map( cat => {
-    //         if (cat.id === this.props.params.categoryId) {
-    //             cat.tasks && cat.tasks.push(newTask)
-    //         }
-    //         return cat;
-    //     });
-    //
-    //     this.setState(state => { return {categories: categories} }, this.recalculateProgress);
-    // }
     //
     //
     // changeFilter(showDone, searchText) {
@@ -85,9 +61,7 @@ export class Main extends Component {
     render() {
         return (
             <div className="main">
-                {/*<Header filter={this.state.filter}*/}
-                        {/*progress={this.state.progress}*/}
-                        {/*changeFilter={this.changeFilter}/>*/}
+                <Header {...this.props.params}/>
                 <div className="content">
                     <div className="side-nav">
                         <CategoryList {...this.props.params} />

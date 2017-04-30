@@ -83,7 +83,7 @@ class CategoryList extends Component {
                 }
 
                 return <ListItem key={item.id}
-                                 selected={+this.props.categoryId === +item.id}
+                                 selected={this.props.categoryId === item.id}
                                  open={item.id === this.state.categoryIsAddingTo || this.props.mode === CategoryListMode.toMove}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
                 > {this.drawCategory(item, categories)}

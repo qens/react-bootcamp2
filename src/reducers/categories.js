@@ -2,14 +2,14 @@ import uniqueId from 'lodash/uniqueId';
 import * as types from '../constants/action-types';
 
 let initialState = [{
-    id: 0,
+    id: '0',
     name: 'Category 1',
 }, {
-    id: 1,
+    id: '1',
     name: 'Category 2'
 }, {
-    id: 2,
-    parentId: 1,
+    id: '2',
+    parentId: '1',
     name: 'Category 2 1'
 }];
 

@@ -2,12 +2,28 @@ import React, {Component} from 'react';
 import {Checkbox, IconButton, LinearProgress, TextField} from "material-ui";
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import './header.css';
+import {connect} from "react-redux";
 
-export default class Header extends Component {
+
+const mapStateProps = (state, ownProps) => {
+    let tasks = ownProps.categoryId ? state.tasks.filter(task => task.categoryId.toString() === ownProps.categoryId) : null;
+    let progress;
+    if (tasks && tasks.length) {
+        let total = tasks.length;
+        let count = tasks.map(task => task.done).reduce((counter, isDone) => counter + isDone);
+        progress = count * 100 / total;
+    }
+
+    return {
+        progress: progress
+    }
+};
+class Header extends Component {
     textField;
 
     constructor(props) {
         super(props);
+        console.debug(props);
 
         this.state = {
             showDone: props.filter && props.filter.showDone,
@@ -48,7 +64,7 @@ export default class Header extends Component {
                               onCheck={this.onCheck}/>
                     <TextField hintText="Search"
                                defaultValue={this.state.searchText}
-                               ref={field=>this.textField = field}
+                               ref={field => this.textField = field}
                                onChange={this.onSearch}/>
                     <IconButton tooltip="Clear" onClick={this.clear}><ClearIcon /></IconButton>
                 </div>
@@ -59,3 +75,5 @@ export default class Header extends Component {
         </div>);
     }
 }
+
+export default connect(mapStateProps)(Header);

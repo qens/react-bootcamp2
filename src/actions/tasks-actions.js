@@ -8,5 +8,5 @@ export const addTask = (name, categoryId) => ({
 
 export const changeTask = (id, done, name, categoryId, description) => ({
     type: types.CHANGE_TASK,
-    done, name, categoryId, description
+    id, done, name, categoryId, description
 });
