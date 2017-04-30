@@ -16,9 +16,9 @@ export class TaskEditor extends Component {
                 <RaisedButton label="Save changes" />
                 <RaisedButton label="Cancel"/>
             </div>
-            <TextField defaultValue={this.state.task.name} />
+            <TextField id="-1" defaultValue={this.state.task.name} />
             <Checkbox label="Done" />
-            <TextField hintText="Description" multiLine="true" rows={5}/>
+            <TextField id="-2" hintText="Description" multiLine={true} rows={5}/>
         </div>);
     }
 }

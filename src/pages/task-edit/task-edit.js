@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
-import AppService from '../../app.service';
-import {CategoryList, CategoryListMode} from "../main/category-list/category-list";
+import {CategoryListMode} from "../main/category-list/category-list";
+import CategoryList from "../main/category-list/category-list";
 import {TaskEditor} from "./task-editor/task-editor";
+import {connect} from "react-redux";
+import {changeTask} from "../../actions/tasks-actions";
+import {bindActionCreators} from "redux";
 
-export class TaskEdit extends Component {
+const mapStateProps = (state, ownProps) => ({
+    categories: state.categories,
+    task: state.tasks.find(task => task.id === ownProps.params.taskId)
+});
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({changeTask}, dispatch)
+);
+class TaskEdit extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            categories: AppService.getCategories(),
-            task: AppService.getTaskById(props.router.params.taskId)
-        };
+        console.debug(props);
 
         this.move = this.move.bind(this);
     }
@@ -22,14 +29,14 @@ export class TaskEdit extends Component {
 
         return (
             <div className="main">
-                <div className="header"><h1>{this.state.task.name}</h1></div>
+                <div className="header"><h1>{this.props.task.name}</h1></div>
                 <div className="content">
                     <div className="side-nav">
-                        <CategoryList mode={CategoryListMode.toMove} categories={this.state.categories}
+                        <CategoryList mode={CategoryListMode.toMove} categories={this.props.categories}
                                       move={this.move}/>
                     </div>
                     <article className="article">
-                        <TaskEditor task={this.state.task}/>
+                        <TaskEditor task={this.props.task}/>
                     </article>
                 </div>
             </div>
@@ -37,3 +44,4 @@ export class TaskEdit extends Component {
 
     }
 }
+export default connect(mapStateProps, mapDispatchToProps)(TaskEdit);

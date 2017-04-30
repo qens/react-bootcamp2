@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import AppService from '../../app.service';
-import uniqueId from 'lodash/uniqueId';
 
 import Header from "./header/header";
 import CategoryList from "./category-list/category-list";
