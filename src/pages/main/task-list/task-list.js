@@ -13,10 +13,18 @@ const paperStyle = {
     marginTop: '3px'
 };
 
-const mapStateProps = (state, ownProps) => ({
-    tasks: state.tasks.filter(task=>task.categoryId.toString() === ownProps.params.categoryId),
-    categoryId: ownProps.params.categoryId
-});
+const mapStateProps = (state, ownProps) => {
+    console.debug(ownProps);
+    return {
+        tasks: state.tasks.filter(task =>
+        task.categoryId === ownProps.params.categoryId
+        && (ownProps.location.query ?
+            (ownProps.location.query.showDone === 'false' ? !task.done : true)
+            && (ownProps.location.query.searchText ? task.name.includes(ownProps.location.query.searchText) : true)
+            : true)),
+        categoryId: ownProps.params.categoryId
+    }
+};
 const mapDispatchToProps = dispatch => (
     bindActionCreators({addTask, changeTask}, dispatch)
 );

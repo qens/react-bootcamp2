@@ -3,16 +3,19 @@ import {Checkbox, IconButton, LinearProgress, TextField} from "material-ui";
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import './header.css';
 import {connect} from "react-redux";
+import {browserHistory} from "react-router";
 
 
 const mapStateProps = (state, ownProps) => {
-    let tasks = ownProps.categoryId ? state.tasks.filter(task => task.categoryId.toString() === ownProps.categoryId) : null;
+    let tasks = ownProps.categoryId ? state.tasks.filter(task => task.categoryId === ownProps.categoryId) : null;
     let progress;
     if (tasks && tasks.length) {
         let total = tasks.length;
         let count = tasks.map(task => task.done).reduce((counter, isDone) => counter + isDone);
         progress = count * 100 / total;
     }
+
+    console.debug(browserHistory);
 
     return {
         progress: progress
@@ -24,34 +27,46 @@ class Header extends Component {
     constructor(props) {
         super(props);
         console.debug(props);
+        let location = browserHistory.getCurrentLocation();
 
         this.state = {
-            showDone: props.filter && props.filter.showDone,
-            searchText: props.filter && props.filter.searchText
+            showDone: location.query && location.query.showDone,
+            searchText: location.query && location.query.searchText
         };
 
         this.clear = this.clear.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
-        this.onCheck = this.onCheck.bind(this);
-        this.onSearch = this.onSearch.bind(this);
+        this.onShowDoneChange = this.onShowDoneChange.bind(this);
+        this.onSearchTextChange = this.onSearchTextChange.bind(this);
+    }
+
+    componentWillReceiveProps(newProps) {
+        let location = browserHistory.getCurrentLocation();
+        this.setState({
+            showDone: location.query && location.query.showDone,
+            searchText: location.query && location.query.searchText
+        });
+        this.textField.input.value = location.query.searchText || '';
     }
 
     clear(e) {
-        this.setState({searchText: null});
+        this.setState({searchText: null, showDone: false}, this.changeFilter);
         this.textField.input.value = '';
     }
 
-    onCheck(e, checked) {
+    onShowDoneChange(e, checked) {
         this.setState({showDone: checked}, this.changeFilter);
     }
 
-    onSearch(e, searchText) {
+    onSearchTextChange(e, searchText) {
         this.setState({searchText: searchText}, this.changeFilter);
     }
 
     changeFilter() {
         console.debug(this.state);
-        this.props.changeFilter(this.state.showDone, this.state.searchText);
+        const location = Object.assign({}, browserHistory.getCurrentLocation());
+        Object.assign(location.query, this.state);
+        browserHistory.push(location);
     }
 
     render() {
@@ -61,11 +76,11 @@ class Header extends Component {
                 <div className="filter">
                     <Checkbox style={{width: '155px'}} label="Show done"
                               defaultChecked={this.state.showDone}
-                              onCheck={this.onCheck}/>
+                              onCheck={this.onShowDoneChange}/>
                     <TextField hintText="Search"
                                defaultValue={this.state.searchText}
                                ref={field => this.textField = field}
-                               onChange={this.onSearch}/>
+                               onChange={this.onSearchTextChange}/>
                     <IconButton tooltip="Clear" onClick={this.clear}><ClearIcon /></IconButton>
                 </div>
             </div>
