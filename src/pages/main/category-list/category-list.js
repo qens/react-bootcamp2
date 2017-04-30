@@ -15,7 +15,7 @@ export const CategoryListMode = {
     toMove: 1
 };
 
-const mapStateProps = state => ({
+const mapStateProps = (state) => ({
     categories: state.categories
 });
 const mapDispatchToProps = dispatch => (
@@ -39,8 +39,6 @@ class CategoryList extends Component {
         return <span>
             <TextField hintText="Input category name" ref={(field) => textField = field}/>
             <FlatButton label="Add" onClick={() => {
-                console.debug(textField);
-                // this.props.addCategory(textField.input.value, this.props.categories);
                 this.props.addCategory(textField.input.value, this.props.categories.id);
                 textField.input.value = '';
             }}/>
@@ -51,7 +49,7 @@ class CategoryList extends Component {
         return <span key="-1">
             <AddEditCategory
                 addCategory={(value) => {
-                    this.props.addCategory(value, item.categories, item);
+                    this.props.addCategory(value, item.id);
                     this.setState({categoryIsAddingTo: null});
                 }}
                 cancel={() => this.setState({categoryIsAddingTo: null})}/>
@@ -78,12 +76,14 @@ class CategoryList extends Component {
                 if (item.id === this.state.categoryIsAddingTo) {
                     nestedItems.push(this.drawNestedAddCategory(item));
                 }
-                if (item.categories) {
-                    Array.prototype.push.apply(nestedItems, this.drawCategories(item.categories));
+
+                let nestedCategories = this.props.categories.filter(cat => cat.parentId === item.id);
+                if (nestedCategories) {
+                    Array.prototype.push.apply(nestedItems, this.drawCategories(nestedCategories));
                 }
 
                 return <ListItem key={item.id}
-                                 selected={this.props.chosenCategoryId === item.id}
+                                 selected={+this.props.categoryId === +item.id}
                                  open={item.id === this.state.categoryIsAddingTo || this.props.mode === CategoryListMode.toMove}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
                 > {this.drawCategory(item, categories)}
@@ -96,7 +96,7 @@ class CategoryList extends Component {
         return (<div className="category-list">
             {this.state.mode === CategoryListMode.full ? this.drawAddCategory(this.props.categories) : null}
             <List>
-                {this.props.categories ? this.drawCategories(this.props.categories) : null}
+                {this.props.categories ? this.drawCategories(this.props.categories.filter(cat => !cat.parentId)) : null}
             </List>
         </div>);
     }

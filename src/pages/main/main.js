@@ -148,7 +148,7 @@ export class Main extends Component {
                         {/*changeFilter={this.changeFilter}/>*/}
                 <div className="content">
                     <div className="side-nav">
-                        <CategoryList />
+                        <CategoryList {...this.props.params} />
                     </div>
                     {/*<article className="article"> */}
                         {/*{this.props.children && React.cloneElement(this.props.children, {*/}

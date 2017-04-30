@@ -1,6 +1,6 @@
 import {categories} from "./categories";
-import {combineReducers} from "redux";
+import {tasks} from "./tasks";
 
-export const reducers = combineReducers({
-    categories
-});
+export const reducers = {
+    categories, tasks
+};
