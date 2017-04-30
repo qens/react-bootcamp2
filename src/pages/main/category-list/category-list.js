@@ -6,13 +6,23 @@ import {AddEditCategory} from "../../../common/category/add-edit-category";
 import './category-list.css';
 import {Link} from "react-router";
 import CategoryToMove from "../../../common/category/category-to-move";
+import {connect} from 'react-redux';
+import {addCategory} from "../../../actions/categories-actions";
+import {bindActionCreators} from "redux";
 
 export const CategoryListMode = {
     full: 0,
     toMove: 1
 };
 
-export class CategoryList extends Component {
+const mapStateProps = state => ({
+    categories: state.categories
+});
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({addCategory}, dispatch)
+);
+
+class CategoryList extends Component {
 
     constructor(props) {
         super(props);
@@ -30,7 +40,8 @@ export class CategoryList extends Component {
             <TextField hintText="Input category name" ref={(field) => textField = field}/>
             <FlatButton label="Add" onClick={() => {
                 console.debug(textField);
-                this.props.addCategory(textField.input.value, this.props.categories);
+                // this.props.addCategory(textField.input.value, this.props.categories);
+                this.props.addCategory(textField.input.value, this.props.categories.id);
                 textField.input.value = '';
             }}/>
         </span>
@@ -92,3 +103,5 @@ export class CategoryList extends Component {
 
 
 }
+
+export default connect(mapStateProps, mapDispatchToProps)(CategoryList);
