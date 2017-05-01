@@ -55,12 +55,7 @@ export const tasks = (state = initialState, action) => {
                 done: action.done
             }) : task));
         case types.EDIT_TASK:
-            return state.map(task => (task.id === action.id ? Object.assign({}, task, {
-                categoryId: action.categoryId,
-                name: action.name,
-                done: action.done,
-                description: action.description
-            }) : task));
+            return state.map(task => (task.id === action.id ? Object.assign({}, task, action.task) : task));
         default:
             return state;
     }

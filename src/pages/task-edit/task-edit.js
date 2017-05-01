@@ -1,67 +1,63 @@
 import React, {Component} from 'react';
-import {TaskEditor} from "./task-editor/task-editor";
+import TaskEditor from "./task-editor/task-editor";
 import {connect} from "react-redux";
-import {editTask} from "../../actions/tasks-actions";
+import {editTask, editTaskToEdit, setTaskToEdit} from "../../actions/tasks-actions";
 import {bindActionCreators} from "redux";
 import {CategoryListToMove} from "./category-list-to-move/category-list-to-move";
+import {store} from '../../store';
 
-const mapStateProps = (state, ownProps) => ({
-    categories: state.categories,
-    task: state.tasks.find(task => task.id === ownProps.params.taskId)
-});
+const mapStateProps = (state, ownProps) => {
+    let taskToEdit = state.taskToEdit;
+    if (taskToEdit.id !== ownProps.params.taskId) {
+        store.dispatch(setTaskToEdit(state.tasks.find(task => task.id === ownProps.params.taskId)));
+    }
+
+    return {
+        categories: state.categories,
+        task: taskToEdit
+    };
+};
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({editTask}, dispatch)
+    bindActionCreators({setTaskToEdit, editTaskToEdit, editTask}, dispatch)
 );
 class TaskEdit extends Component {
     constructor(props) {
         super(props);
         console.debug(props);
 
-        this.state = {
-            task: Object.assign({}, this.props.task)
-        };
-
         this.move = this.move.bind(this);
         this.saveTask = this.saveTask.bind(this);
         this.cancel = this.cancel.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({task: Object.assign({}, this.props.task)});
-    }
-
     move(categoryId) {
         console.debug('Move to category: ', categoryId);
-        this.setState(({task}) => task.categoryId = categoryId);
+        this.props.editTaskToEdit(this.props.task.id, this.props.task.done,
+            this.props.task.name, categoryId, this.props.task.description);
     }
 
-    saveTask(name, done, description) {
-        this.props.editTask(this.state.task.id, done, name, this.state.task.categoryId, description);
+    saveTask() {
+        this.props.editTask(this.props.task.id, this.props.task);
     }
 
     cancel() {
-        this.setState({task: Object.assign({}, this.props.task)});
+        this.props.setTaskToEdit(null);
     }
 
     render() {
-
-        return (
-            <div className="main">
-                <div className="header"><h1>{this.state.task.name}</h1></div>
+        return this.props.task ?
+            ( <div className="main">
+                <div className="header"><h1>{this.props.task.name}</h1></div>
                 <div className="content">
                     <div className="side-nav">
                         <CategoryListToMove categories={this.props.categories}
-                                            move={this.move} categoryId={this.state.task.categoryId}/>
+                                            move={this.move} categoryId={this.props.task.categoryId}/>
                     </div>
                     <article className="article">
-                        <TaskEditor name={this.state.task.name} done={this.state.task.done}
-                                    description={this.state.task.description}
-                                    saveTask={this.saveTask} cancel={this.cancel}/>
+                        <TaskEditor saveTask={this.saveTask} cancel={this.cancel}/>
                     </article>
                 </div>
-            </div>
-        );
-
+            </div>) : null;
     }
 }
 export default connect(mapStateProps, mapDispatchToProps)(TaskEdit);

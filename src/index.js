@@ -6,16 +6,14 @@ import ReactDOM from 'react-dom';
 import {Main} from "./pages/main/main";
 import TaskList from "./pages/main/task-list/task-list";
 import TaskEdit from "./pages/task-edit/task-edit";
-import {combineReducers, createStore} from "redux";
-import {reducers} from "./reducers/index";
 import {Provider} from "react-redux";
-import {syncHistoryWithStore, routerReducer} from "react-router-redux";
+import {syncHistoryWithStore} from "react-router-redux";
+import {store} from "./store";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-const store = createStore(combineReducers({...reducers, routing: routerReducer}));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
