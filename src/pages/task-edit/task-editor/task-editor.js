@@ -21,13 +21,13 @@ class TaskEditor extends Component {
                 <RaisedButton label="Save changes" onClick={this.props.saveTask}/>
                 <RaisedButton label="Cancel" onClick={this.props.cancel}/>
             </div>
-            <TextField id="-1" value={this.props.task.name}
-                       onChange={(ev, value) => this.props.editTaskToEdit(this.props.task.id,
+            <TextField id="1" value={this.props.task.name}
+                       onChange={(ev, name) => this.props.editTaskToEdit(this.props.task.id,
                            this.props.task.done, name, this.props.task.categoryId, this.props.task.description)}/>
             <Checkbox label="Done" defaultChecked={this.props.task.done}
                       onCheck={(ev, done) => this.props.editTaskToEdit(this.props.task.id,
                           done, this.props.task.name, this.props.task.categoryId, this.props.task.description)}/>
-            <TextField id="-2" hintText="Description" multiLine={true} rows={5}
+            <TextField id="2" hintText="Description" multiLine={true} rows={5}
                        value={this.props.task.description}
                        onChange={(ev, description) => this.props.editTaskToEdit(this.props.task.id,
                            this.props.task.done, this.props.task.name, this.props.task.categoryId, description)}/>
