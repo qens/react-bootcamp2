@@ -20,8 +20,8 @@ class App extends Component {
         return (<MuiThemeProvider>
             <div>
                 {this.props.children}
-                <FlatButton label="Undo" disabled={this.props.appHistory.canUndo} onClick={this.props.undo}/>
-                <FlatButton label="Redo" disabled={this.props.appHistory.canRedo} onClick={this.props.redo}/>
+                <FlatButton label="Undo" disabled={!this.props.appHistory.canUndo} onClick={this.props.undo}/>
+                <FlatButton label="Redo" disabled={!this.props.appHistory.canRedo} onClick={this.props.redo}/>
             </div>
         </MuiThemeProvider>);
     }
