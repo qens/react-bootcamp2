@@ -18,7 +18,7 @@ export default class CategoryToMove extends Component {
                     <IconButton onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        console.debug('add category');
+                        console.debug('move category');
                         this.props.move(this.props.category.id);
                     }}><NavigationSubdirectoryArrowLeft /></IconButton>
                 </div>

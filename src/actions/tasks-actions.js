@@ -11,6 +11,7 @@ export const doneTask = (id, done) => ({
     id, done
 });
 
+
 export const editTask = (id, done, name, categoryId, description) => ({
     type: types.EDIT_TASK,
     id, done, name, categoryId, description
