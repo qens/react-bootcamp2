@@ -22,11 +22,25 @@ class TaskEdit extends Component {
         };
 
         this.move = this.move.bind(this);
+        this.saveTask = this.saveTask.bind(this);
+        this.cancel = this.cancel.bind(this);
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({task: Object.assign({}, this.props.task)});
     }
 
     move(categoryId) {
         console.debug('Move to category: ', categoryId);
-        this.setState(state => state.task.categoryId = categoryId);
+        this.setState(({task}) => task.categoryId = categoryId);
+    }
+
+    saveTask(name, done, description) {
+        this.props.editTask(this.state.task.id, done, name, this.state.task.categoryId, description);
+    }
+
+    cancel() {
+        this.setState({task: Object.assign({}, this.props.task)});
     }
 
     render() {
@@ -37,10 +51,12 @@ class TaskEdit extends Component {
                 <div className="content">
                     <div className="side-nav">
                         <CategoryListToMove categories={this.props.categories}
-                                      move={this.move} categoryId={this.state.task.categoryId}/>
+                                            move={this.move} categoryId={this.state.task.categoryId}/>
                     </div>
                     <article className="article">
-                        <TaskEditor task={this.state.task}/>
+                        <TaskEditor name={this.state.task.name} done={this.state.task.done}
+                                    description={this.state.task.description}
+                                    saveTask={this.saveTask} cancel={this.cancel}/>
                     </article>
                 </div>
             </div>
