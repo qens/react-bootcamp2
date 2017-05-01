@@ -5,7 +5,7 @@ import './task-list.css';
 import {Link} from "react-router";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {addTask, changeTask} from "../../../actions/tasks-actions";
+import {addTask, doneTask} from "../../../actions/tasks-actions";
 
 const paperStyle = {
     width: '100%',
@@ -26,7 +26,7 @@ const mapStateProps = (state, ownProps) => {
     }
 };
 const mapDispatchToProps = dispatch => (
-    bindActionCreators({addTask, changeTask}, dispatch)
+    bindActionCreators({addTask, doneTask}, dispatch)
 );
 class TaskList extends Component {
 
@@ -54,7 +54,7 @@ class TaskList extends Component {
                     <div className="task-left-part">
                         <Checkbox defaultChecked={task.done}
                                   style={{width: '20px'}}
-                                  onCheck={(event, isInputChecked) => this.props.changeTask(task.id, isInputChecked, task.name, task.categoryId, task.description)}/>
+                                  onCheck={(event, isInputChecked) => this.props.doneTask(task.id, isInputChecked)}/>
                         <span>{task.name}</span>
                     </div>
                     <Link to={`/task/${task.id}/edit`}><IconButton><EditorModeEdit /></IconButton></Link>

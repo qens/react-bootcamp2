@@ -30,7 +30,7 @@ class Header extends Component {
         let location = browserHistory.getCurrentLocation();
 
         this.state = {
-            showDone: location.query && location.query.showDone,
+            showDone: location.query && location.query.showDone ? location.query.showDone.toString() === 'true' : false,
             searchText: location.query && location.query.searchText
         };
 
@@ -43,7 +43,7 @@ class Header extends Component {
     componentWillReceiveProps(newProps) {
         let location = browserHistory.getCurrentLocation();
         this.setState({
-            showDone: location.query && location.query.showDone,
+            showDone: location.query && location.query.showDone ? location.query.showDone.toString() === 'true' : false,
             searchText: location.query && location.query.searchText
         });
         this.textField.input.value = location.query.searchText || '';

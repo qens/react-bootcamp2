@@ -50,14 +50,10 @@ export const tasks = (state = initialState, action) => {
                 done: false,
                 description: ''
             }, ...state];
-        case types.CHANGE_TASK:
-            return state.map(task => (task.id === action.id ? {
-                id: task.id,
-                categoryId: action.categoryId,
-                name: action.name,
-                done: action.done,
-                description: action.description
-            } : task));
+        case types.DONE_TASK:
+            return state.map(task => (task.id === action.id ? Object.assign({}, task, {
+                done: action.done
+            }) : task));
         default:
             return state;
     }

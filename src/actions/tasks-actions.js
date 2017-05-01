@@ -6,7 +6,12 @@ export const addTask = (name, categoryId) => ({
     categoryId
 });
 
-export const changeTask = (id, done, name, categoryId, description) => ({
-    type: types.CHANGE_TASK,
+export const doneTask = (id, done) => ({
+    type: types.DONE_TASK,
+    id, done
+});
+
+export const editTask = (id, done, name, categoryId, description) => ({
+    type: types.EDIT_TASK,
     id, done, name, categoryId, description
 });
