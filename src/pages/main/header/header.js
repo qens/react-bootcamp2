@@ -15,8 +15,6 @@ const mapStateProps = (state, ownProps) => {
         progress = count * 100 / total;
     }
 
-    console.debug(browserHistory);
-
     return {
         progress: progress
     }
@@ -26,7 +24,6 @@ class Header extends Component {
 
     constructor(props) {
         super(props);
-        console.debug(props);
         let location = browserHistory.getCurrentLocation();
 
         this.state = {

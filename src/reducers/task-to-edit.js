@@ -1,7 +1,6 @@
 import * as types from '../constants/action-types';
 
 export const taskToEdit = (state = {}, action) => {
-    console.debug(action);
     switch (action.type) {
         case types.SET_TASK_TO_EDIT:
             return Object.assign({}, action.task);

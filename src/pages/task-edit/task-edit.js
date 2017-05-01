@@ -23,7 +23,6 @@ const mapDispatchToProps = dispatch => (
 class TaskEdit extends Component {
     constructor(props) {
         super(props);
-        console.debug(props);
 
         this.move = this.move.bind(this);
         this.saveTask = this.saveTask.bind(this);
@@ -31,7 +30,6 @@ class TaskEdit extends Component {
     }
 
     move(categoryId) {
-        console.debug('Move to category: ', categoryId);
         this.props.editTaskToEdit(this.props.task.id, this.props.task.done,
             this.props.task.name, categoryId, this.props.task.description);
     }

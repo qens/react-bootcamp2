@@ -6,7 +6,6 @@ import CategoryList from "./category-list/category-list";
 export class Main extends Component {
     constructor(props) {
         super(props);
-        console.debug(props);
     }
 
     render() {

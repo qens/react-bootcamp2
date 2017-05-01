@@ -14,7 +14,6 @@ const paperStyle = {
 };
 
 const mapStateProps = (state, ownProps) => {
-    console.debug(ownProps);
     return {
         tasks: state.tasks.filter(task =>
         task.categoryId === ownProps.params.categoryId
@@ -32,7 +31,6 @@ class TaskList extends Component {
 
     constructor(props) {
         super(props);
-        console.debug(props);
     }
 
     drawCreateTaskBlock() {
