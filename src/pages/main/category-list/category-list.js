@@ -5,15 +5,10 @@ import Category from "../../../common/category/category";
 import {AddEditCategory} from "../../../common/category/add-edit-category";
 import './category-list.css';
 import {Link} from "react-router";
-import CategoryToMove from "../../../common/category/category-to-move";
 import {connect} from 'react-redux';
 import {addCategory, editCategory, removeCategory} from "../../../actions/categories-actions";
 import {bindActionCreators} from "redux";
 
-export const CategoryListMode = {
-    full: 0,
-    toMove: 1
-};
 
 const mapStateProps = (state) => ({
     categories: state.categories
@@ -27,7 +22,6 @@ class CategoryList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: props.mode || CategoryListMode.full,
             categoryIsAddingTo: null
         };
 
@@ -61,9 +55,7 @@ class CategoryList extends Component {
     }
 
     drawCategory(item, categories) {
-        return this.state.mode === CategoryListMode.toMove ?
-            <CategoryToMove category={item} move={this.props.move}/>
-            : <Link to={`/list/${item.id}`}>
+        return <Link to={`/list/${item.id}`}>
                 <Category category={item}
                           removeCategory={() => this.props.removeCategory(item.id)}
                           addToCategory={this.addToCategory}
@@ -84,7 +76,7 @@ class CategoryList extends Component {
 
                 return <ListItem key={item.id}
                                  selected={this.props.categoryId === item.id}
-                                 open={item.id === this.state.categoryIsAddingTo || this.props.mode === CategoryListMode.toMove}
+                                 open={item.id === this.state.categoryIsAddingTo}
                                  nestedItems={nestedItems && nestedItems.length ? nestedItems : null}
                 > {this.drawCategory(item, categories)}
                 </ListItem>
@@ -94,7 +86,7 @@ class CategoryList extends Component {
 
     render() {
         return (<div className="category-list">
-            {this.state.mode === CategoryListMode.full ? this.drawAddCategory(this.props.categories) : null}
+            {this.drawAddCategory(this.props.categories)}
             <List>
                 {this.props.categories ? this.drawCategories(this.props.categories.filter(cat => !cat.parentId)) : null}
             </List>

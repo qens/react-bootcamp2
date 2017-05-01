@@ -5,6 +5,7 @@ import {TaskEditor} from "./task-editor/task-editor";
 import {connect} from "react-redux";
 import {changeTask} from "../../actions/tasks-actions";
 import {bindActionCreators} from "redux";
+import {CategoryListToMove} from "./category-list-to-move/category-list-to-move";
 
 const mapStateProps = (state, ownProps) => ({
     categories: state.categories,
@@ -32,7 +33,7 @@ class TaskEdit extends Component {
                 <div className="header"><h1>{this.props.task.name}</h1></div>
                 <div className="content">
                     <div className="side-nav">
-                        <CategoryList mode={CategoryListMode.toMove} categories={this.props.categories}
+                        <CategoryListToMove categories={this.props.categories}
                                       move={this.move}/>
                     </div>
                     <article className="article">
