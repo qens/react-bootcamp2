@@ -1,18 +1,18 @@
 import * as types from '../constants/action-types';
 
-const appHistory = {
-    past: [],
-    present: {}, //reducer(undefined, {}),
-    future: []
-};
-
-const setAppHistory = (past, present, future) => {
-    appHistory.past = past;
-    appHistory.present = present;
-    appHistory.future = future;
-};
-
 export function undoable(reducer) {
+
+    const appHistory = {
+        past: [],
+        present: {}, //reducer(undefined, {}),
+        future: []
+    };
+
+    const setAppHistory = (past, present, future) => {
+        appHistory.past = past;
+        appHistory.present = present;
+        appHistory.future = future;
+    };
 
     // Return a reducer that handles undo and redo
     return function (state, action) {
