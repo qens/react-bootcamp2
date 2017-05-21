@@ -12,4 +12,25 @@ describe('categories actions', () => {
 
         expect(actions.addCategory(name, parentId)).toEqual(expectedAction);
     });
+
+    it('should create an action to remove category', ()=>{
+        const id = -1;
+        const expectedAction = {
+            type: types.REMOVE_CATEGORY,
+            id
+        };
+
+        expect(actions.removeCategory(id)).toEqual(expectedAction);
+    });
+
+    it('should create an action to edit category', () => {
+        const id = -1, name = 'Edited test category';
+        const expectedAction = {
+            type: types.EDIT_CATEGORY,
+            id,
+            name
+        };
+
+        expect(actions.editCategory(id, name)).toEqual(expectedAction);
+    });
 });
