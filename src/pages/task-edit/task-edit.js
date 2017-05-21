@@ -36,10 +36,12 @@ class TaskEdit extends Component {
 
     saveTask() {
         this.props.editTask(this.props.task.id, this.props.task);
+        this.props.router.push(`/list/${this.props.task.categoryId}`);
     }
 
     cancel() {
         this.props.setTaskToEdit(null);
+        this.props.router.push(`/list/${this.props.task.categoryId}`);
     }
 
     render() {
